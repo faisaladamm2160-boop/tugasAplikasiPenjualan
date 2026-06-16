@@ -17,13 +17,13 @@ import koneksi.koneksi;
  *
  * @author faisa
  */
-public class Pelanggan extends javax.swing.JFrame {
+public class kasir extends javax.swing.JFrame {
 private Connection conn = new koneksi().connect();
 private DefaultTableModel tabmode;
     /**
-     * Creates new form Pelanggan
+     * Creates new form kasir
      */
-    public Pelanggan(){
+    public kasir(){
     initComponents();
     kosong();
     aktif();
@@ -36,19 +36,21 @@ private DefaultTableModel tabmode;
     txtid.setText("");
     txtnm.setText("");
     txttelp.setText("");
+    cb_ag.setSelectedItem(0);
+    txtpass.setText("");
     txtalamat.setText("");
     txtcari.setText("");
     buttonGroup1.clearSelection();
 }
 protected void datatable(){
-    Object[] Baris = {"ID Pelanggan", "Nama", "Jenis Kelamin", "No. Telepon", "Alamat"};
+    Object[] Baris = {"ID Kasir", "Nama", "Jenis Kelamin", "No. Telepon", "Agama", "Password", "Alamat"};
     tabmode = new DefaultTableModel(null, Baris);
 
     String cariitem = txtcari.getText();
 
     try {
 
-        String sql = "SELECT * FROM pelanggan where id like '%"+cariitem+ "%' or nmplg like '%"+cariitem+"%' order by id asc";
+        String sql = "SELECT * FROM kasir where id_kasir like '%"+cariitem+ "%' or nm_kasir like '%"+cariitem+"%' order by id_kasir asc";
         Statement stat = conn.createStatement();
         ResultSet hasil = stat.executeQuery(sql);
 
@@ -58,7 +60,9 @@ protected void datatable(){
         hasil.getString(2),
         hasil.getString(3),
         hasil.getString(4),
-        hasil.getString(5)
+        hasil.getString(5),
+        hasil.getString(6),
+        hasil.getString(7),
     });
 }
 
@@ -99,8 +103,6 @@ private void txtcariKeyPressed(java.awt.event.KeyEvent evt){
         jLabel7 = new javax.swing.JLabel();
         rlaki = new javax.swing.JRadioButton();
         rperempuan = new javax.swing.JRadioButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtalamat = new javax.swing.JTextArea();
         bsimpan = new javax.swing.JButton();
         bubah = new javax.swing.JButton();
         bhapus = new javax.swing.JButton();
@@ -111,14 +113,20 @@ private void txtcariKeyPressed(java.awt.event.KeyEvent evt){
         bcari = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblplgn = new javax.swing.JTable();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtalamat = new javax.swing.JTextArea();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        cb_ag = new javax.swing.JComboBox<>();
+        txtpass = new javax.swing.JPasswordField();
 
         jLabel2.setText("jLabel2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("DATA PELANGGAN");
+        jLabel1.setText("DATA KASIR");
 
-        jLabel3.setText("ID Pelanggan");
+        jLabel3.setText("ID Kasir");
 
         txtid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,7 +134,7 @@ private void txtcariKeyPressed(java.awt.event.KeyEvent evt){
             }
         });
 
-        jLabel4.setText("Nama Pelanggan");
+        jLabel4.setText("Nama Kasir");
 
         jLabel5.setText("Jenis Kelamin");
 
@@ -139,10 +147,6 @@ private void txtcariKeyPressed(java.awt.event.KeyEvent evt){
 
         buttonGroup1.add(rperempuan);
         rperempuan.setText("Perempuan");
-
-        txtalamat.setColumns(20);
-        txtalamat.setRows(5);
-        jScrollPane1.setViewportView(txtalamat);
 
         bsimpan.setText("Simpan");
         bsimpan.addActionListener(new java.awt.event.ActionListener() {
@@ -216,6 +220,28 @@ private void txtcariKeyPressed(java.awt.event.KeyEvent evt){
         });
         jScrollPane2.setViewportView(tblplgn);
 
+        txtalamat.setColumns(20);
+        txtalamat.setRows(5);
+        jScrollPane1.setViewportView(txtalamat);
+
+        jLabel9.setText("Agama");
+
+        jLabel10.setText("Password");
+
+        cb_ag.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Islam", "Kristen", "Katolik", "Hindu", "Buddha", "Konghucu", " " }));
+        cb_ag.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cb_agActionPerformed(evt);
+            }
+        });
+
+        txtpass.setText("jPasswordField1");
+        txtpass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtpassActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -230,45 +256,49 @@ private void txtcariKeyPressed(java.awt.event.KeyEvent evt){
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(140, 140, 140)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel9)
+                                    .addComponent(jLabel10)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel4))
+                                .addGap(98, 98, 98)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel3)
-                                            .addComponent(jLabel5)
-                                            .addComponent(jLabel6)
-                                            .addComponent(jLabel7))
-                                        .addGap(98, 98, 98)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(rlaki)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(rperempuan))
-                                            .addComponent(txtid)
-                                            .addComponent(txttelp)
-                                            .addComponent(txtnm)
-                                            .addComponent(jScrollPane1)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(bsimpan)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(bubah)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(bhapus)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(bbatal)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(bkeluar))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(txtcari, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(bcari))
+                                        .addComponent(rlaki)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(rperempuan))
+                                    .addComponent(txtid)
+                                    .addComponent(txttelp)
+                                    .addComponent(txtnm)
+                                    .addComponent(jScrollPane1)
+                                    .addComponent(cb_ag, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtpass)))
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jLabel8)))
-                        .addGap(0, 130, Short.MAX_VALUE))
+                        .addGap(0, 168, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane2)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(txtcari, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(bcari))
+                                    .addComponent(bsimpan))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(bubah)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(bhapus)
+                                .addGap(18, 18, 18)
+                                .addComponent(bbatal)
+                                .addGap(18, 18, 18)
+                                .addComponent(bkeluar)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -280,48 +310,57 @@ private void txtcariKeyPressed(java.awt.event.KeyEvent evt){
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
-                        .addGap(40, 40, 40)
-                        .addComponent(jLabel4)
-                        .addGap(40, 40, 40)
+                        .addGap(100, 100, 100)
                         .addComponent(jLabel5)
                         .addGap(42, 42, 42)
                         .addComponent(jLabel6))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(txtid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(34, 34, 34)
-                        .addComponent(txtnm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtnm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
                         .addGap(33, 33, 33)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(rlaki)
                             .addComponent(rperempuan))
                         .addGap(34, 34, 34)
                         .addComponent(txttelp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(34, 34, 34)
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(cb_ag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(txtpass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bsimpan)
                     .addComponent(bubah)
                     .addComponent(bhapus)
                     .addComponent(bbatal)
                     .addComponent(bkeluar))
-                .addGap(17, 17, 17)
+                .addGap(10, 10, 10)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtcari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bcari))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(27, 27, 27)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void bsimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bsimpanActionPerformed
+        String jeniss = cb_ag.getSelectedItem().toString();
         String jenis = null;
     if(rlaki.isSelected()){
         jenis = "Laki-Laki";
@@ -329,7 +368,7 @@ private void txtcariKeyPressed(java.awt.event.KeyEvent evt){
     }else if(rperempuan.isSelected()){
         jenis = "Perempuan";
     }
-    String sql = "insert into pelanggan values (?,?,?,?,?)";
+    String sql = "insert into kasir values (?,?,?,?,?,?,?)";
 
     try{
         PreparedStatement stat = conn.prepareStatement(sql);
@@ -337,7 +376,9 @@ private void txtcariKeyPressed(java.awt.event.KeyEvent evt){
         stat.setString(2, txtnm.getText());
         stat.setString(3, jenis);
         stat.setString(4, txttelp.getText());
-        stat.setString(5, txtalamat.getText());
+        stat.setString(5, jeniss);
+        stat.setString(6, txtpass.getText());
+        stat.setString(7, txtalamat.getText());
 
         stat.executeUpdate();
         JOptionPane.showMessageDialog(null, "data berhasil disimpan");
@@ -356,6 +397,7 @@ private void txtcariKeyPressed(java.awt.event.KeyEvent evt){
 
     private void bubahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bubahActionPerformed
 String jenis = null;
+String jeniss = cb_ag.getSelectedItem().toString();
 	if(rlaki.isSelected()){
 		jenis = "Laki-Laki";
 	}else if(rperempuan.isSelected()){
@@ -363,12 +405,14 @@ String jenis = null;
 	}
 
 	try{
-		String sql = "update pelanggan set nmplg=?, jenis=?, telepon=?, alamat=? where id='"+txtid.getText()+"'";
+		String sql = "update kasir set nm_kasir=?, jenis_kelamin=?, no_telepon=?, agama=?, password=?, alamat=? where id_kasir='"+txtid.getText()+"'";
 		PreparedStatement stat = conn.prepareStatement(sql);
-		stat.setString(1, txtnm.getText());
-		stat.setString(2, jenis);
-		stat.setString(3, txttelp.getText());
-		stat.setString(4, txtalamat.getText());
+                stat.setString(1, txtnm.getText());
+                stat.setString(2, jenis);
+                stat.setString(3, txttelp.getText());
+                stat.setString(4, jeniss);
+                stat.setString(6, txtpass.getText());
+                stat.setString(5, txtalamat.getText());
 		stat.executeUpdate();
 		JOptionPane.showMessageDialog(null, "data berhasil diubah");
 		kosong();
@@ -383,7 +427,7 @@ String jenis = null;
     private void bhapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bhapusActionPerformed
 int ok = JOptionPane.showConfirmDialog(null,"hapus", "konfirmasi dialog",JOptionPane.YES_NO_OPTION);
     if (ok==0){
-        String sql = "delete from pelanggan where id ='"+txtid.getText()+"'";
+        String sql = "delete from kasir where id_kasir ='"+txtid.getText()+"'";
     
         try{
             PreparedStatement stat = conn.prepareStatement(sql);
@@ -408,38 +452,53 @@ kosong();
   dispose();
     }//GEN-LAST:event_bkeluarActionPerformed
 
-    private void bcariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bcariActionPerformed
-datatable();
-    }//GEN-LAST:event_bcariActionPerformed
-
     private void bcariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_bcariKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER){
-           datatable();
-       }
+            datatable();
+        }
     }//GEN-LAST:event_bcariKeyPressed
 
-    private void tblplgnKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblplgnKeyPressed
+    private void bcariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bcariActionPerformed
+        datatable();
+    }//GEN-LAST:event_bcariActionPerformed
 
+    private void tblplgnKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblplgnKeyPressed
+if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+           datatable();
+       }
     }//GEN-LAST:event_tblplgnKeyPressed
 
     private void tblplgnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblplgnMouseClicked
-      int bar = tblplgn.getSelectedRow();
-    String a = tabmode.getValueAt(bar, 0).toString();
-    String b = tabmode.getValueAt(bar, 1).toString();
-    String c = tabmode.getValueAt(bar, 2).toString();
-    String d = tabmode.getValueAt(bar, 3).toString();
-    String e = tabmode.getValueAt(bar, 4).toString();
-    
-    txtid.setText(a);
-    txtnm.setText(b);
-    if("laki-laki".equals(c)){
-        rlaki.setSelected(true);
-    }else {
-        rperempuan.setSelected(true);
-    }
-    txttelp.setText(d);
-    txtalamat.setText(e);  
+        int bar = tblplgn.getSelectedRow();
+        String a = tabmode.getValueAt(bar, 0).toString();
+        String b = tabmode.getValueAt(bar, 1).toString();
+        String c = tabmode.getValueAt(bar, 2).toString();
+        String d = tabmode.getValueAt(bar, 3).toString();
+        String e = tabmode.getValueAt(bar, 4).toString();
+        String f = tabmode.getValueAt(bar, 5).toString();
+        String g = tabmode.getValueAt(bar, 6).toString();
+
+        txtid.setText(a);
+        txtnm.setText(b);
+        if("laki-laki".equals(c)){
+            rlaki.setSelected(true);
+        }else {
+            rperempuan.setSelected(true);
+        }
+        txttelp.setText(d);
+        cb_ag.setSelectedItem(e);
+        txtpass.setText(f);
+        txtalamat.setText(g);
+        
     }//GEN-LAST:event_tblplgnMouseClicked
+
+    private void cb_agActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_agActionPerformed
+        
+    }//GEN-LAST:event_cb_agActionPerformed
+
+    private void txtpassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpassActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtpassActionPerformed
 
     /**
      * @param args the command line arguments
@@ -458,20 +517,21 @@ datatable();
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Pelanggan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(kasir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Pelanggan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(kasir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Pelanggan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(kasir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Pelanggan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(kasir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Pelanggan().setVisible(true);
+                new kasir().setVisible(true);
             }
         });
     }
@@ -485,7 +545,9 @@ datatable();
     private javax.swing.JButton bubah;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.JComboBox<String> cb_ag;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -493,6 +555,7 @@ datatable();
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JRadioButton rlaki;
@@ -502,6 +565,7 @@ datatable();
     private javax.swing.JTextField txtcari;
     private javax.swing.JTextField txtid;
     private javax.swing.JTextField txtnm;
+    private javax.swing.JPasswordField txtpass;
     private javax.swing.JTextField txttelp;
     // End of variables declaration//GEN-END:variables
 }
