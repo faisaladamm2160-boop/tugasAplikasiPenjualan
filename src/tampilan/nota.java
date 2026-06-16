@@ -585,6 +585,7 @@ public String kdbrg, nmbrg, jnsbrg, hrgbli, hrgjl;
         kosong();
         aktif();
         autonumber();
+//        ini komen doang mau dihapus lagi juga gk apapa, cuman mau ngecek github bisa ke push atau engga
     }//GEN-LAST:event_bsimpanActionPerformed
 
     private void bbatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bbatalActionPerformed
