@@ -4,6 +4,10 @@
  * and open the template in the editor.
  */
 package tampilan;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
+import java.util.HashMap;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
@@ -113,6 +117,18 @@ public String kdbrg, nmbrg, jnsbrg, hrgbli, hrgjl;
         hargab.setText(hrgbli);
         hargaj.setText(hrgjl);
         qty.requestFocus();
+    }
+    
+    public void cetak(){
+        try{
+            String path="./src/repot.jasper";
+            HashMap parameter = new HashMap();
+            parameter.put("id_nota",idn.getText());
+            JasperPrint print = JasperFillManager.fillReport(path,parameter,conn);
+            JasperViewer.viewReport(print,false);
+        }catch (Exception ex){
+            JOptionPane.showMessageDialog(rootPane,"Dokumen Tidak Ada"+ ex);
+        }
     }
     
     
@@ -582,9 +598,11 @@ public String kdbrg, nmbrg, jnsbrg, hrgbli, hrgjl;
         } catch (SQLException e){
                     JOptionPane.showMessageDialog(null,"data gagal disimpan");
     }
+        cetak();
         kosong();
         aktif();
         autonumber();
+        
 //        ini komen doang mau dihapus lagi juga gk apapa, cuman mau ngecek github bisa ke push atau engga
 //ini yang kedua setelah hapus branch main, karna pake yang master aja soalnya lebih rapih
     }//GEN-LAST:event_bsimpanActionPerformed
