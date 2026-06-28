@@ -43,7 +43,7 @@ private DefaultTableModel tabmode;
     buttonGroup1.clearSelection();
 }
 protected void datatable(){
-    Object[] Baris = {"ID Kasir", "Nama", "Jenis Kelamin", "No. Telepon", "Agama", "Password", "Alamat"};
+    Object[] Baris = {"ID Kasir", "Nama", "Jenis Kelamin", "No. Telepon", "Agama", "Alamat", "Password"};
     tabmode = new DefaultTableModel(null, Baris);
 
     String cariitem = txtcari.getText();
@@ -377,8 +377,8 @@ private void txtcariKeyPressed(java.awt.event.KeyEvent evt){
         stat.setString(3, jenis);
         stat.setString(4, txttelp.getText());
         stat.setString(5, jeniss);
-        stat.setString(6, txtpass.getText());
-        stat.setString(7, txtalamat.getText());
+        stat.setString(6, txtalamat.getText());
+        stat.setString(7, txtpass.getText());
 
         stat.executeUpdate();
         JOptionPane.showMessageDialog(null, "data berhasil disimpan");
@@ -411,8 +411,8 @@ String jeniss = cb_ag.getSelectedItem().toString();
                 stat.setString(2, jenis);
                 stat.setString(3, txttelp.getText());
                 stat.setString(4, jeniss);
-                stat.setString(6, txtpass.getText());
                 stat.setString(5, txtalamat.getText());
+                stat.setString(6, txtpass.getText());
 		stat.executeUpdate();
 		JOptionPane.showMessageDialog(null, "data berhasil diubah");
 		kosong();

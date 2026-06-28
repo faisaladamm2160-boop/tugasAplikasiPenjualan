@@ -552,7 +552,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="idn">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jTextField10"/>
+        <Property name="editable" type="boolean" value="false"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="labelKasir">

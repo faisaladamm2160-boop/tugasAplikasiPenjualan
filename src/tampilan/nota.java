@@ -28,21 +28,23 @@ public String kdbrg, nmbrg, jnsbrg, hrgbli, hrgjl;
 
     public nota() {
         initComponents();
-//        String KD = UserID.getUserLogin();
-//        labelKasir.setText(KD);
+        String KD = UserID.getUserLogin();
+        labelKasir.setText(KD);
+        System.out.println(KD);
         kosong();
         aktif();
         autonumber();
+        nama();
     }
 
     protected void nama(){
         try{
-            String sql = "select * FROM kasir Where id_kasir='"+labelKasir.getText()+"'";
+            String sql = "select * FROM kasir Where id_kasir = '"+labelKasir.getText()+"'";
             Statement stat = conn.createStatement();
             ResultSet hasil = stat.executeQuery(sql);
             
             if(hasil.next()){
-                labelNama.setText(hasil.getString("nama_kasir"));
+                labelNama.setText(hasil.getString("nm_kasir"));
             }
         } catch (SQLException e){
             JOptionPane.showMessageDialog(null, "Data gagal dipanggil"+e);
@@ -71,24 +73,39 @@ public String kdbrg, nmbrg, jnsbrg, hrgbli, hrgjl;
     
     protected void autonumber() {
     try {
-        String sql = "SELECT id_nota FROM nota order by id_nota desc";
+        String sql = "SELECT id_nota FROM nota ORDER BY id_nota DESC LIMIT 1";
         Statement stat = conn.createStatement();
         ResultSet res = stat.executeQuery(sql);
-        if (res.next()) {
-            String id_nota = res.getString("id_nota").substring(2);
-            int AN = (Integer.parseInt(id_nota) + 1);
-            String Nol = "";
 
-            if (AN< 10) { Nol = "000"; }
-            else if (AN<100) { Nol = "00"; }
-            else if (AN<1000) { Nol = "0"; }
-            else if (AN<10000) { Nol = ""; }
+        if (res.next()) {
+            String idNotaDb = res.getString("id_nota");
+
+            if (idNotaDb != null && idNotaDb.length() >= 2) {
+                // Potong awalan "NT"
+                String angkaSaja = idNotaDb.substring(2);
+                
+                // Ubah ke integer dan tambah 1
+                int AN = Integer.parseInt(angkaSaja) + 1;
+                String Nol = "";
+
+                if (AN < 10) { Nol = "000"; }
+                else if (AN < 100) { Nol = "00"; }
+                else if (AN < 1000) { Nol = "0"; }
+                else if (AN < 10000) { Nol = ""; }
+                
                 idn.setText("NT" + Nol + AN);
+                
+            } else {
+                idn.setText("NT0001");
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Auto number gagal: " + e);
+        } else {
+            idn.setText("NT0001");
         }
+        
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Auto number gagal: " + e.getMessage());
     }
+}
 
     public void hitung() {
         int total = 0;
@@ -121,7 +138,7 @@ public String kdbrg, nmbrg, jnsbrg, hrgbli, hrgjl;
     
     public void cetak(){
         try{
-            String path="./src/repot.jasper";
+            String path="./src/Report/reportNota.jasper";
             HashMap parameter = new HashMap();
             parameter.put("id_nota",idn.getText());
             JasperPrint print = JasperFillManager.fillReport(path,parameter,conn);
@@ -428,7 +445,7 @@ public String kdbrg, nmbrg, jnsbrg, hrgbli, hrgjl;
 
         jLabel15.setText("Total Harga");
 
-        idn.setText("jTextField10");
+        idn.setEditable(false);
 
         labelKasir.setText("jLabel16");
 
@@ -578,7 +595,7 @@ public String kdbrg, nmbrg, jnsbrg, hrgbli, hrgjl;
             stat.setString(4, labelKasir.getText());
             
             stat.executeUpdate();
-            
+            PreparedStatement stat2 = conn.prepareStatement(zsql);
             int t = tblTransaksi.getRowCount();
             for (int i=0; i < t ; i++){
                 String xkd = tblTransaksi.getValueAt(i, 0).toString();
@@ -586,7 +603,7 @@ public String kdbrg, nmbrg, jnsbrg, hrgbli, hrgjl;
                 String xhj = tblTransaksi.getValueAt(i, 3).toString();
                 String xqty = tblTransaksi.getValueAt(i, 4).toString();
                 
-                PreparedStatement stat2 = conn.prepareStatement(zsql);
+                
                 stat2.setString(1, idn.getText());
                 stat2.setString(2, xkd);
                 stat2.setString(3, xhb);
@@ -595,8 +612,8 @@ public String kdbrg, nmbrg, jnsbrg, hrgbli, hrgjl;
                 
                 stat2.executeUpdate();
                 }JOptionPane.showMessageDialog(null, "data berhasil disimpan");
-        } catch (SQLException e){
-                    JOptionPane.showMessageDialog(null,"data gagal disimpan");
+        } catch (Exception e){
+                    JOptionPane.showMessageDialog(null,"data gagal disimpan"+e.getMessage());
     }
         cetak();
         kosong();
