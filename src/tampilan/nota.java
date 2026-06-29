@@ -618,7 +618,71 @@ public String kdbrg, nmbrg, jnsbrg, hrgbli, hrgjl;
         cetak();
         kosong();
         aktif();
-        autonumber();
+        autonumber();                                      
+//    // 1. PENGAMAN: Cek apakah Pelanggan sudah dipilih dan Keranjang tidak kosong
+//    if (idp.getText().trim().isEmpty()) {
+//        // Menggunakan 'this' agar pesan error muncul persis di tengah form, tidak ngumpet
+//        JOptionPane.showMessageDialog(this, "Data Pelanggan belum dipilih! Silakan cari pelanggan dulu.");
+//        return; // Hentikan proses simpan
+//    }
+//    if (tblTransaksi.getRowCount() == 0) {
+//        JOptionPane.showMessageDialog(this, "Keranjang masih kosong! Tambahkan barang terlebih dahulu.");
+//        return; 
+//    }
+//
+//    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//    String fd = sdf.format(tgl.getValue());
+//    String sql = "insert into nota values (?,?,?,?)";
+//    String zsql = "insert into isi values (?,?,?,?,?)";
+//
+//    try {
+//        // Pastikan koneksi tidak terputus
+//        if (this.conn == null || this.conn.isClosed()) {
+//            this.conn = new koneksi().connect();
+//        }
+//
+//        // 2. Simpan ke tabel Nota
+//        PreparedStatement stat = conn.prepareStatement(sql);
+//        stat.setString(1, idn.getText());
+//        stat.setString(2, fd);
+//        stat.setString(3, idp.getText());
+//        stat.setString(4, labelKasir.getText());
+//        stat.executeUpdate();
+//
+//        // 3. Simpan ke tabel Isi (Detail Barang)
+//        PreparedStatement stat2 = conn.prepareStatement(zsql);
+//        int t = tblTransaksi.getRowCount();
+//        for (int i = 0; i < t ; i++){
+//            // Pengaman baris kosong
+//            if (tblTransaksi.getValueAt(i, 0) != null) {
+//                String xkd = tblTransaksi.getValueAt(i, 0).toString();
+//                String xhb = tblTransaksi.getValueAt(i, 2).toString();
+//                String xhj = tblTransaksi.getValueAt(i, 3).toString();
+//                String xqty = tblTransaksi.getValueAt(i, 4).toString();
+//
+//                stat2.setString(1, idn.getText());
+//                stat2.setString(2, xkd);
+//                stat2.setString(3, xhb);
+//                stat2.setString(4, xhj);
+//                stat2.setString(5, xqty);
+//                stat2.executeUpdate();
+//            }
+//        }
+//
+//        // 4. NOTIFIKASI BERHASIL
+//        JOptionPane.showMessageDialog(this, "Data transaksi berhasil disimpan!");
+//
+//        // 5. PENTING: Fungsi ini dimasukkan ke DALAM blok Try
+//        // Agar laporan hanya dicetak JIKA penyimpanan benar-benar sukses 100%
+//        cetak();
+//        kosong();
+//        aktif();
+//        autonumber();
+//
+//    } catch (Exception e) {
+//        // Tampilkan pesan error asli dari MySQL jika gagal
+//        JOptionPane.showMessageDialog(this, "Data gagal disimpan, penyebab: \n" + e.getMessage());
+//    }
         
 //        ini komen doang mau dihapus lagi juga gk apapa, cuman mau ngecek github bisa ke push atau engga
 //ini yang kedua setelah hapus branch main, karna pake yang master aja soalnya lebih rapih

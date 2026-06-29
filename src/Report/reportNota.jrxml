@@ -3,7 +3,8 @@
 	<property name="ireport.zoom" value="1.4641000000000006"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<queryString language="SQL">
+	<parameter name="id_nota" class="java.lang.String"/>
+	<queryString>
 		<![CDATA[SELECT
      pelanggan.`id` AS pelanggan_id,
      pelanggan.`nmplg` AS pelanggan_nmplg,
@@ -35,7 +36,9 @@ FROM
      `pelanggan` pelanggan INNER JOIN `nota` nota ON pelanggan.`id` = nota.`id`
      INNER JOIN `kasir` kasir ON nota.`id_kasir` = kasir.`id_kasir`
      INNER JOIN `isi` isi ON nota.`id_nota` = isi.`id_nota`
-     INNER JOIN `barang` barang ON isi.`kd_brg` = barang.`kd_brg`]]>
+     INNER JOIN `barang` barang ON isi.`kd_brg` = barang.`kd_brg`
+WHERE
+	isi.id_nota = $P{id_nota}]]>
 	</queryString>
 	<field name="pelanggan_id" class="java.lang.String"/>
 	<field name="pelanggan_nmplg" class="java.lang.String"/>
@@ -81,13 +84,13 @@ FROM
 				</textElement>
 				<text><![CDATA[NOTA]]></text>
 			</staticText>
+			<line>
+				<reportElement uuid="646c33c0-2d5b-4449-9436-3d49675bbe73" x="0" y="43" width="555" height="1"/>
+			</line>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="12" splitType="Stretch"/>
-	</pageHeader>
-	<columnHeader>
-		<band height="111" splitType="Stretch">
+		<band height="56" splitType="Stretch">
 			<staticText>
 				<reportElement uuid="852fc77f-0be3-4be5-86a8-2aefcfe8948a" x="0" y="0" width="137" height="20"/>
 				<textElement verticalAlignment="Middle">
@@ -144,49 +147,47 @@ FROM
 				</textElement>
 				<textFieldExpression><![CDATA[$F{kasir_nm_kasir}]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement uuid="646c33c0-2d5b-4449-9436-3d49675bbe73" x="0" y="0" width="555" height="1"/>
-			</line>
-			<line>
-				<reportElement uuid="646c33c0-2d5b-4449-9436-3d49675bbe73" x="0" y="-55" width="555" height="1"/>
-			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="31" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="852fc77f-0be3-4be5-86a8-2aefcfe8948a" x="0" y="91" width="31" height="20"/>
+				<reportElement uuid="852fc77f-0be3-4be5-86a8-2aefcfe8948a" x="0" y="1" width="31" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="14"/>
 				</textElement>
 				<text><![CDATA[No.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="852fc77f-0be3-4be5-86a8-2aefcfe8948a" x="31" y="91" width="138" height="20"/>
+				<reportElement uuid="852fc77f-0be3-4be5-86a8-2aefcfe8948a" x="31" y="1" width="138" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="14"/>
 				</textElement>
 				<text><![CDATA[Nama Barang]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="852fc77f-0be3-4be5-86a8-2aefcfe8948a" x="169" y="91" width="78" height="20"/>
+				<reportElement uuid="852fc77f-0be3-4be5-86a8-2aefcfe8948a" x="169" y="1" width="78" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="14"/>
 				</textElement>
 				<text><![CDATA[QTY]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="852fc77f-0be3-4be5-86a8-2aefcfe8948a" x="247" y="91" width="136" height="20"/>
+				<reportElement uuid="852fc77f-0be3-4be5-86a8-2aefcfe8948a" x="247" y="1" width="136" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="14"/>
 				</textElement>
 				<text><![CDATA[Harga]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="852fc77f-0be3-4be5-86a8-2aefcfe8948a" x="383" y="91" width="172" height="20"/>
+				<reportElement uuid="852fc77f-0be3-4be5-86a8-2aefcfe8948a" x="383" y="1" width="172" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="14"/>
 				</textElement>
 				<text><![CDATA[Total]]></text>
 			</staticText>
 			<line>
-				<reportElement uuid="646c33c0-2d5b-4449-9436-3d49675bbe73" x="0" y="90" width="555" height="1"/>
+				<reportElement uuid="646c33c0-2d5b-4449-9436-3d49675bbe73" x="0" y="1" width="555" height="1"/>
 			</line>
 		</band>
 	</columnHeader>
